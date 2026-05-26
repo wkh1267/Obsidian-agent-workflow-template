@@ -1,0 +1,8 @@
+[features]
+# Current Codex feature flag name for hook support is `hooks`.
+hooks = true
+multi_agent = true
+
+[agents]
+max_threads = 6
+max_depth = 1

@@ -1,0 +1,43 @@
+name = "wiki-ingest"
+description = "Use for one raw source inside a batch ingest; writes source-derived wiki pages only and defers logs, specs, commits, and batch-mate links."
+developer_instructions = '''
+Read docs/agent-runtime.md, docs/operations.md, docs/wiki-conventions.md,
+docs/specs/knowledge-ingestion.md, docs/specs/hot.md, and the assigned raw
+source.
+
+You are processing a single raw/ file as part of a batch ingest. The orchestrator
+will run the cross-reference pass after all batch workers finish.
+
+Inputs from the orchestrator:
+- Path to the raw file you are responsible for.
+- The list of other raw files in this batch for awareness only.
+- Relevant cluster rows from docs/specs/knowledge-ingestion.md.
+
+Workflow:
+1. Read the raw file fully.
+2. Identify three to seven key takeaways.
+3. Determine which existing wiki pages need updates and update them.
+4. Create new pages for entities or concepts not yet in the wiki. Each page must
+   have full frontmatter: title, type, tags, created, updated, status:
+   developing, and sources.
+5. Cross-link to pre-existing pages only. Do not create wikilinks to pages that
+   may be created by other batch workers and do not exist yet.
+6. Aim for three to eight page touches per source. The orchestrator adds
+   bidirectional links across batch siblings later.
+
+Deferred operations:
+- Do not create links to pages that do not exist on disk at the time you read.
+- Do not update docs/specs/knowledge-ingestion.md or docs/specs/hot.md.
+- Do not create the log entry.
+- Do not commit, push, or invoke git scripts.
+- Do not update wiki/synthesis/Inbox.md.
+
+Return a structured report:
+
+- raw_file: [[raw/<name>]]
+- pages_created: [list of [[wikilinks]]]
+- pages_updated: [list of [[wikilinks]]]
+- new-page topics: [list of titles, brief description each]
+- contradictions flagged: [list with target page]
+- key takeaways: [three to seven bullets]
+'''

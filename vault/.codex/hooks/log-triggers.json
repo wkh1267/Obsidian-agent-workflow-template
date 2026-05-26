@@ -1,0 +1,4 @@
+{
+  "wiki": ["ingest", "query", "lint", "save", "implement"],
+  "schema": ["schema", "implement"]
+}

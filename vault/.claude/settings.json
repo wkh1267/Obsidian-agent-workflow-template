@@ -1,0 +1,67 @@
+{
+    "enabledPlugins":  {
+                           "obsidian@obsidian-skills":  true
+                       },
+    "permissions":  {
+                        "allow":  [
+                                      "Bash(git status*)",
+                                      "Bash(git add*)",
+                                      "Bash(git diff*)",
+                                      "Bash(git log*)",
+                                      "Bash(git commit*)",
+                                      "Write",
+                                      "Edit"
+                                  ]
+                    },
+    "hooks":  {
+                  "PreToolUse":  [
+                                     {
+                                         "matcher":  "Bash",
+                                         "hooks":  [
+                                                       {
+                                                           "type":  "command",
+                                                           "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File \".claude/scripts/git-add-guard.ps1\""
+                                                       }
+                                                   ]
+                                     }
+                                 ],
+                  "PostToolUse":  [
+                                      {
+                                          "matcher":  "Bash",
+                                          "hooks":  [
+                                                        {
+                                                            "type":  "command",
+                                                            "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File \".claude/scripts/log-check.ps1\""
+                                                        },
+                                                        {
+                                                            "type":  "command",
+                                                            "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File \".claude/scripts/hot-check.ps1\""
+                                                        }
+                                                    ]
+                                      }
+                                  ],
+                  "Stop":  [
+                               {
+                                   "matcher":  "",
+                                   "hooks":  [
+                                                 {
+                                                     "type":  "command",
+                                                     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File \".claude/scripts/closeout-check.ps1\""
+                                                 }
+                                             ]
+                               }
+                           ],
+                  "UserPromptSubmit":  [
+                                           {
+                                               "matcher":  "(?i)^(sync|push)$",
+                                               "hooks":  [
+                                                             {
+                                                                 "type":  "command",
+                                                                 "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File \".claude/scripts/git-push.ps1\"",
+                                                                 "statusMessage":  "Pushing vault to GitHub..."
+                                                             }
+                                                         ]
+                                           }
+                                       ]
+              }
+}

@@ -1,0 +1,9 @@
+# Obsidian workspace state, cache, and trash
+.obsidian/workspace*.json
+.obsidian/cache/
+.trash/
+
+# Runtime and local-machine ephemera
+server.log
+.claude/worktrees/
+.claude/*.local.json

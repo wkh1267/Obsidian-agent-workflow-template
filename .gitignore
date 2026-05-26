@@ -1,0 +1,19 @@
+# Root-local scratch files
+.env
+.env.*
+*.local
+*.tmp
+tmp/
+temp/
+scratch/
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Accidental app state at the public repository root
+/.obsidian/
+/.trash/
+*.log
