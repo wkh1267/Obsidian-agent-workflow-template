@@ -270,6 +270,25 @@ After cloning:
 - Keep raw source material, private wiki content, and local settings out of any
   public template release.
 
+## Design Lineage
+
+This template combines a few ideas that work well together:
+
+- **LLM Wiki / Markdown-first knowledge base** - inspired by the pattern of
+  keeping raw sources, synthesized wiki pages, and agent-maintained knowledge in
+  readable Markdown.
+- **Agent skills, commands, hooks, and subagents** - separates user-invoked
+  actions, reusable procedures, lifecycle automation, and bounded specialist
+  agents.
+- **AGENTS.md-style shared instructions** - keeps agent behavior predictable by
+  storing runtime instructions in repository files rather than relying on hidden
+  chat memory.
+- **Docs-as-code and ADR-style records** - treats plans, decisions, reviews, and
+  workflow state as versioned Markdown artifacts.
+- **PKM traditions such as Zettelkasten / Second Brain** - inform the idea of
+  durable linked notes, while this template focuses specifically on
+  agent-assisted workflows.
+
 ## Maintainers
 
 ### Update An Existing Public Template Repository
