@@ -12,6 +12,12 @@ memory, the vault records source material, curated wiki pages, operating rules,
 issue plans, reviews, and operation logs as Markdown files a human can inspect
 and edit.
 
+The design is influenced by ideas like Andrej Karpathy's LLM Wiki pattern and
+agent skills: let models help with filing, synthesis, and workflow bookkeeping,
+but keep the control surface in plain text. This template turns that idea into a
+repeatable vault shape with explicit triggers, bounded subagents, reviewable
+issue artifacts, and Git-backed safety gates.
+
 The generated public repository has two layers:
 
 - The repository root contains Git hooks and release-maintenance scripts.
