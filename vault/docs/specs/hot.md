@@ -1,7 +1,7 @@
 ---
 title: Hot Cache
 type: meta
-last_updated: 2026-05-26 (public template seed)
+last_updated: 2026-05-27 (public template seed)
 ---
 
 # Hot Cache

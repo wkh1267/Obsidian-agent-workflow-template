@@ -36,7 +36,7 @@ guidance, not a substitute for the procedure docs themselves.
 
 | Trigger / situation | Read on demand |
 |---|---|
-| INGEST, QUERY, LINT, SAVE, SCHEMA, ISSUE procedure steps | `docs/operations.md` |
+| INGEST, QUERY, LINT, SAVE, SCHEMA, ISSUE, RELEASE procedure steps | `docs/operations.md` |
 | Knowledge work — wiki state, clusters, ingestion context | `docs/specs/knowledge-ingestion.md` |
 | Workflow, tooling, schema, hook, skill, agent, loader, migration work | `docs/specs/system-development.md` |
 | Tracked issue lifecycle, role boundaries, orchestration modes, closeout gates | `docs/issue-workflow.md` |
@@ -194,6 +194,7 @@ Follow `docs/git-workflow.md`.
 | Change workflows, hooks, skills, agents, loaders, or operating docs | SCHEMA |
 | `/issue`, open/plan/review/implement/close/abandon an issue | ISSUE |
 | `/issue auto-plan`, `/issue auto-full`, or Codex auto-mode prompts with explicit subagent/delegation consent | ISSUE |
+| `export the template`, `release`/`update the public template` | RELEASE |
 | `sync` or `push` | Push committed work only |
 
 ## See Also

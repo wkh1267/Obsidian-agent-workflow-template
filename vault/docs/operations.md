@@ -166,6 +166,48 @@ Issue artifacts commit under `schema:`; implementation work commits under its na
 
 **ISSUE vs SAVE**: SAVE = "capture a thought already formed in chat"; ISSUE = "track a change not yet made to the vault or its tooling."
 
+## RELEASE — publishing the public workflow template
+
+When the user says `export the template`, `release the public template`, or
+`update the public template`, mirror the sanitized vault into the existing
+public template repository. This is a maintainer action run from the private
+source vault.
+
+0. Read `docs/specs/system-development.md` for current public-template export and
+   release-gate state.
+1. **Default = non-destructive mirror.** From the private source vault, run:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File scripts/update-public-template-repo.ps1 -Destination <existing-public-repo> -ConfirmMirror
+   ```
+
+   The helper derives its source root from its own `scripts/` location, exports a
+   sanitized tree to a temp directory, mirrors it into the public repo while
+   preserving `.git`, removes stale exported files, runs `scan-public-tree.ps1`
+   as the pre-commit PASS gate, and stops before staging, committing, or pushing.
+2. Show the mirror diff (`git -C <repo> status` / `diff`). Stage explicit paths
+   and commit with a public-safe `users.noreply.github.com` identity (never a
+   personal email). The helper never commits.
+3. Run the post-commit gate: `scripts/scan-public-repo.ps1 -RepoRoot <repo>`, or
+   the `/release-check` command (Claude) / `release-check` skill (Codex), which
+   run both scans against the committed candidate. PASS requires exit 0.
+4. **Stop before push.** Confirm with the user first; never push unless the user
+   says `sync`/`push` and the post-commit repo scan passed. If the public repo
+   has no remote yet, add one first (`git remote add origin <url>`).
+
+Guardrails:
+- Always confirm before pushing, and before any destructive re-init.
+- `scripts/export-public-template.ps1 -Clean` **deletes the destination,
+  including its `.git`**. Use it only for a disposable export (the user says
+  `preview the export` / `export to a temp dir`) or, with explicit confirmation,
+  a one-time `re-init the public repo` rebuild.
+- Scan policy lives only in the root scan scripts; this procedure invokes them
+  and never reimplements hazard patterns.
+
+Release tooling changes in the private vault commit under `schema:` (with a
+matching `operation: schema` log) and `spec:`; the public-repo commit itself
+follows that repository's own conventions and is not a private-vault commit.
+
 ## Index and Log rules
 
 **index.md**
