@@ -4,6 +4,12 @@ An Obsidian-based workflow template for agent-assisted knowledge work, shared by
 Claude Code and Codex through human-readable Markdown state, commands, hooks,
 skills, and issue artifacts.
 
+![Obsidian graph view of a vault built on this template](assets/vault-graph.png)
+
+The graph view above shows a knowledge vault grown on this template: curated
+wiki pages linked into clusters, with a highlighted note and its direct
+connections.
+
 ## What This Template Is
 
 This template turns an Obsidian vault into the durable source of truth for

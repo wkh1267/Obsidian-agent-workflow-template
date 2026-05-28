@@ -491,6 +491,22 @@ function Copy-TextFile {
     Write-Text -Path (Join-RelativePath -Root $DestinationRoot -RelativePath $PublicRelativePath) -Content $content
 }
 
+function Copy-BinaryFile {
+    param(
+        [Parameter(Mandatory = $true)][string]$SourceRelativePath,
+        [Parameter(Mandatory = $true)][string]$PublicRelativePath
+    )
+
+    $sourcePath = Join-RelativePath -Root $SourceRoot -RelativePath $SourceRelativePath
+    if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) {
+        throw "Missing source file: $SourceRelativePath"
+    }
+
+    $destPath = Join-RelativePath -Root $DestinationRoot -RelativePath $PublicRelativePath
+    New-Directory (Split-Path -Parent $destPath)
+    Copy-Item -LiteralPath $sourcePath -Destination $destPath -Force
+}
+
 function Test-ExcludedSourcePath {
     param([Parameter(Mandatory = $true)][string]$SourceRelativePath)
 
@@ -755,6 +771,7 @@ New-Directory $DestinationRoot
 Write-Text -Path (Join-RelativePath -Root $DestinationRoot -RelativePath '.gitignore') -Content (Get-PublicRootGitIgnore)
 Write-Text -Path (Join-RelativePath -Root $DestinationRoot -RelativePath 'LICENSE') -Content ((Get-PublicLicense) + "`n")
 Copy-TextFile -SourceRelativePath 'README.md' -PublicRelativePath 'README.md'
+Copy-BinaryFile -SourceRelativePath 'assets/vault-graph.png' -PublicRelativePath 'assets/vault-graph.png'
 Copy-TextFile -SourceRelativePath 'scripts/export-public-template.ps1' -PublicRelativePath 'scripts/export-public-template.ps1'
 Copy-TextFile -SourceRelativePath 'scripts/lib/public-scan.ps1' -PublicRelativePath 'scripts/lib/public-scan.ps1'
 Copy-TextFile -SourceRelativePath 'scripts/scan-public-tree.ps1' -PublicRelativePath 'scripts/scan-public-tree.ps1'

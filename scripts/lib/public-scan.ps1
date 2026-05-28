@@ -199,6 +199,12 @@ function Find-PublicTextHazards {
     return $findings.ToArray()
 }
 
+function Test-PublicScanBinaryPath {
+    param([Parameter(Mandatory = $true)][string]$RelativePath)
+
+    return $RelativePath -match '\.(png|jpe?g|gif|webp|bmp|ico|svgz|pdf|woff2?|ttf|otf|eot|zip|gz|mp4|mov|webm)$'
+}
+
 function Find-PublicTreeTextHazards {
     param(
         [Parameter(Mandatory = $true)][string]$TreeRoot,
@@ -212,6 +218,9 @@ function Find-PublicTreeTextHazards {
 
     foreach ($file in (Get-PublicScanFiles -TreeRoot $root -AllowRootGit:$AllowRootGit)) {
         $rel = ConvertTo-PublicScanSlashPath (Get-PublicScanChildRelativePath -BasePath $root -ChildPath $file.FullName)
+        if (Test-PublicScanBinaryPath $rel) {
+            continue
+        }
         try {
             $text = Read-PublicScanText $file.FullName
         } catch {
