@@ -46,8 +46,7 @@ to the shared runtime in `docs/agent-runtime.md` and task procedures in
 Clone the public template repository:
 
 ```powershell
-git clone <repository-url>
-Set-Location <repository-folder>
+git clone https://github.com/wkh1267/Obsidian-agent-workflow-template.git
 ```
 
 Open `vault/` in Obsidian.
@@ -78,6 +77,63 @@ open an issue for adding a new workflow
 review the plan for issue 0001
 sync
 ```
+
+## Repository Layout
+
+This template ships as a **two-layer repository**, and the split is
+intentional. Each layer has a distinct job:
+
+- **Repository root** — template maintenance only. It holds this `README.md`,
+  the public release/maintenance scripts in `scripts/` (export, mirror, and the
+  tree/repo security scanners), the Git hook installer and pre-commit shim in
+  `.githooks/`, and the root `.gitignore`.
+- **`vault/`** — the actual Obsidian vault. This is the folder you open in
+  Obsidian and point Claude Code or Codex at. All sources, wiki pages, runtime
+  docs, issues, logs, and agent configuration live here.
+
+```text
+<repo-root>/                       <- run Git / release / scan / maintenance here
+├── README.md                      product overview (this file)
+├── .gitignore
+├── .githooks/                     Git hook installer + pre-commit shim
+│   ├── install.ps1
+│   └── pre-commit
+├── scripts/                       template maintenance: export, mirror, scans
+│   ├── export-public-template.ps1
+│   ├── update-public-template-repo.ps1
+│   ├── scan-public-tree.ps1
+│   └── scan-public-repo.ps1
+└── vault/                         <-- OPEN THIS in Obsidian / Claude Code / Codex
+    ├── CLAUDE.md   AGENTS.md       thin agent loaders
+    ├── index.md    log.md          Dataview dashboards
+    ├── docs/                       shared runtime rules, procedures, specs
+    ├── raw/  wiki/  log/  exp/     sources, curated pages, logs, scratch
+    ├── issues/                     tracked issue directories
+    ├── scripts/                    vault-local workflow scripts
+    ├── .claude/  .codex/  .agents/ agent config, hooks, skills, commands
+    └── .obsidian/                  Obsidian configuration
+```
+
+How to work with the two layers:
+
+1. **Open `<repo-root>/vault` in Obsidian — not the repository root.** The vault
+   loaders (`CLAUDE.md`, `AGENTS.md`) and Obsidian config live in `vault/`, so
+   opening the repository root instead would pull maintenance scripts into your
+   graph and leave the agents without their loaders at the vault root.
+2. **Run normal knowledge and issue workflows from `vault/`.** Start Claude Code
+   or Codex with `vault/` as the working directory, then ingest, query, save,
+   lint, and drive the issue workflow from there.
+3. **Run Git, release, scan, and template-maintenance commands from the
+   repository root.** Commits, pushes, the export/mirror helpers, and the public
+   scanners operate on the outer repository that contains the vault.
+4. **This differs from a single-purpose private vault**, where the Git
+   repository root and the Obsidian vault root are the same directory. The public
+   template deliberately separates the maintenance layer from the vault content.
+5. **The split is intentional and does not break the workflow.** The exported
+   hooks and scripts are path-aware: each resolves the vault root and the
+   repository root independently, so staging discipline, closeout checks, and
+   `sync`/`push` routing behave the same whether the vault is the repository root
+   or nested under `vault/`.
 
 ## Vault Organization
 
