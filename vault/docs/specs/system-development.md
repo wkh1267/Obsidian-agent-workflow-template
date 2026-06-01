@@ -1,7 +1,7 @@
 ---
 title: System Development Spec
 track: system-development
-last_updated: 2026-05-28 (public template seed)
+last_updated: 2026-06-01 (public template seed)
 ---
 
 # System Development

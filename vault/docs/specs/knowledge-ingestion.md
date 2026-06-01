@@ -1,7 +1,7 @@
 ---
 title: Knowledge Ingestion Spec
 track: knowledge-ingestion
-last_updated: 2026-05-28 (public template seed)
+last_updated: 2026-06-01 (public template seed)
 ---
 
 # Knowledge Ingestion

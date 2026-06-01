@@ -771,7 +771,11 @@ New-Directory $DestinationRoot
 Write-Text -Path (Join-RelativePath -Root $DestinationRoot -RelativePath '.gitignore') -Content (Get-PublicRootGitIgnore)
 Write-Text -Path (Join-RelativePath -Root $DestinationRoot -RelativePath 'LICENSE') -Content ((Get-PublicLicense) + "`n")
 Copy-TextFile -SourceRelativePath 'README.md' -PublicRelativePath 'README.md'
+Copy-TextFile -SourceRelativePath 'CHANGELOG.md' -PublicRelativePath 'CHANGELOG.md'
 Copy-BinaryFile -SourceRelativePath 'assets/vault-graph.png' -PublicRelativePath 'assets/vault-graph.png'
+Copy-BinaryFile -SourceRelativePath 'assets/sample_issue.png' -PublicRelativePath 'assets/sample_issue.png'
+Copy-BinaryFile -SourceRelativePath 'assets/clean_commit.png' -PublicRelativePath 'assets/clean_commit.png'
+Copy-BinaryFile -SourceRelativePath 'assets/develop_duration.png' -PublicRelativePath 'assets/develop_duration.png'
 Copy-TextFile -SourceRelativePath 'scripts/export-public-template.ps1' -PublicRelativePath 'scripts/export-public-template.ps1'
 Copy-TextFile -SourceRelativePath 'scripts/lib/public-scan.ps1' -PublicRelativePath 'scripts/lib/public-scan.ps1'
 Copy-TextFile -SourceRelativePath 'scripts/scan-public-tree.ps1' -PublicRelativePath 'scripts/scan-public-tree.ps1'

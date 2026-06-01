@@ -408,6 +408,11 @@ function Find-PublicGeneratedPathPolicyFindings {
 
     $expectedRootPaths = @(
         '.gitignore',
+        'CHANGELOG.md',
+        'assets/vault-graph.png',
+        'assets/sample_issue.png',
+        'assets/clean_commit.png',
+        'assets/develop_duration.png',
         'scripts/export-public-template.ps1',
         'scripts/lib/public-scan.ps1',
         'scripts/scan-public-tree.ps1',

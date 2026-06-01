@@ -34,6 +34,25 @@ to the shared runtime in `docs/agent-runtime.md` and task procedures in
 `docs/operations.md`, `docs/wiki-conventions.md`, `docs/git-workflow.md`, and
 `docs/issue-workflow.md`.
 
+## Who This Is For
+
+Use this template if you run serious Claude Code or Codex workflows and want the
+agent's working memory, source material, plans, reviews, and decisions to live in
+durable Markdown that you can inspect, edit, diff, and reuse across sessions.
+
+It is especially useful for:
+
+- Knowledge work that turns raw source material into a linked wiki.
+- Feature or workflow changes that benefit from plan, review, implementation,
+  and closeout artifacts.
+- Cross-agent projects where Claude Code and Codex should follow the same
+  runtime rules.
+- Maintainers who want public-template export and scan tooling alongside the
+  vault workflow.
+
+It may be overkill for simple note-taking or a personal vault that does not need
+agent handoffs, issue artifacts, or release-maintenance tooling.
+
 ## Why Use This Workflow
 
 - **Markdown-first state:** sources, decisions, plans, reviews, and specs stay
@@ -49,40 +68,56 @@ to the shared runtime in `docs/agent-runtime.md` and task procedures in
 
 ## Quick Start
 
-Clone the public template repository:
+Normal agent work happens inside `vault/`. Use the repository root only when a
+command explicitly targets repo-level Git hooks, release scans, or
+template-maintenance scripts.
 
-```powershell
-git clone https://github.com/wkh1267/Obsidian-agent-workflow-template.git
-```
+1. Clone the public template repository:
 
-Open `vault/` in Obsidian.
+   ```powershell
+   git clone https://github.com/wkh1267/Obsidian-agent-workflow-template.git
+   cd Obsidian-agent-workflow-template
+   ```
 
-Install the community plugins listed in `vault/.obsidian/community-plugins.json`:
+2. Open `vault/` in Obsidian, not the repository root.
 
-- Dataview, for the generated index and log dashboards.
-- PDF Plus, for PDF-heavy knowledge workflows.
-- Tag Wrangler, for safe tag rename workflows when tag maintenance is needed.
+3. Install the recommended community plugins listed in
+   `vault/.obsidian/community-plugins.json`:
 
-Review the hook scripts before enabling them. The hook installer configures Git
-to run PowerShell scripts from this repository during later Git and agent
-workflows.
+   - Dataview, for the generated index and log dashboards.
+   - PDF Plus, for PDF-heavy knowledge workflows.
+   - Tag Wrangler, for safe tag rename workflows when tag maintenance is needed.
 
-```powershell
-pwsh -File .githooks/install.ps1
-git config --get core.hooksPath
-```
+4. Review the hook scripts before enabling them. The hook installer configures
+   Git to run PowerShell scripts from this repository during later Git and agent
+   workflows.
 
-Start Claude Code or Codex from `vault/`, then use natural language or the
-documented slash commands. Good first prompts:
+5. Optionally install the Git hooks from the repository root:
 
-```text
-ingest raw/my-source.md
-What do I know about spaced repetition?
-save this as a decision
-open an issue for adding a new workflow
-review the plan for issue 0001
-sync
-```
+   ```powershell
+   pwsh -File .githooks/install.ps1
+   git config --get core.hooksPath
+   ```
+
+6. Start Claude Code or Codex from `vault/`:
+
+   ```powershell
+   cd vault
+   ```
+
+7. Try first prompts with natural language or the documented slash commands:
+
+   ```text
+   ingest raw/my-source.md
+   What do I know about spaced repetition?
+   save this as a decision
+   open an issue for adding a new workflow
+   review the plan for issue 0001
+   sync
+   ```
+
+See `Repository Layout` and `Maintainers` below before running release or scan
+scripts from the repository root.
 
 ## Repository Layout
 
@@ -295,6 +330,30 @@ user advances each stage. In authorized auto modes, the orchestrator may
 continue through accepted stages while pause gates pass, but agents still do not
 push and do not widen their write scopes.
 
+### Issue Workflow In Practice
+
+This template was dogfooded to build and release itself. The screenshots below
+show the durable artifacts and review trail that remain after real workflow
+changes, not a separate demo system.
+
+![Obsidian issue directory with an accepted plan artifact open](assets/sample_issue.png)
+
+An issue directory keeps the plan, plan review, implementation log,
+implementation review, and README together. The open plan is accepted, versioned,
+and readable as normal Markdown.
+
+![Git graph showing scoped schema and spec commits from issue workflow changes](assets/clean_commit.png)
+
+The Git history shows the intended commit shape: issue stages and implementation
+work land as explicit `schema:` and `spec:` commits instead of one opaque
+catch-all change.
+
+![GitHub activity summary showing public-template release work](assets/develop_duration.png)
+
+The public template was released from the same workflow: private vault work,
+public-template export commits, and release checks all leave ordinary Git
+evidence.
+
 ## Hooks And Safety Gates
 
 Hooks are optional but recommended after review:
@@ -352,6 +411,9 @@ This template combines a few ideas that work well together:
   agent-assisted workflows.
 
 ## Maintainers
+
+Most users can ignore this section unless they are maintaining the public
+template itself.
 
 ### Update An Existing Public Template Repository
 
